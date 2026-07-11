@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-theme-primary: #050505;
+  --color-theme-secondary: #ffffff;
+  --color-theme-accent: #1e3a8a;
+  --color-theme-gold: #C0C0C0;
+
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-cormorant);
+  --font-display: var(--font-pinyon);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom base styles for smooth transitions */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Esconder barra de scroll para un aspecto más limpio y premium */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-theme-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-theme-accent);
+  border-radius: 10px;
+}
