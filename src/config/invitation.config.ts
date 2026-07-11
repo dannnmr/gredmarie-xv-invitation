@@ -14,7 +14,7 @@ export const invitationConfig = {
     topLabel: 'Con la bendición de Dios y el amor de mis padres',
     motherName: 'Liliana Magaly Roca',
     fatherName: 'Limber Alba',
-    godparents: [], // Dejar vacío si no hay padrinos explícitos
+    godparents: [] as { role: string; couple: string }[], // Dejar vacío si no hay padrinos explícitos
     invitationText: 'Acompáñanos a celebrar el comienzo de una nueva etapa...',
   },
   itinerary: [
