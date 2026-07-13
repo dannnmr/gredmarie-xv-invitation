@@ -167,7 +167,7 @@ export function EnvelopeScreen({ isOpen, onOpen, onStartOpen }: EnvelopeProps) {
       <button 
         ref={sealRef}
         onClick={handleOpen}
-        className="absolute z-30 w-[350px] h-[350px] flex items-center justify-center cursor-pointer border-none bg-transparent drop-shadow-[0_10px_15px_rgba(0,0,0,0.2)]"
+        className="absolute z-30 w-[300px] h-[300px] flex items-center justify-center cursor-pointer border-none bg-transparent drop-shadow-[0_10px_15px_rgba(0,0,0,0.2)]"
       >
         <Image 
           src={invitationConfig.assets.envelope.seal} 
