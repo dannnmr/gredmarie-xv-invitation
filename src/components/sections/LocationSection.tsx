@@ -7,144 +7,151 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { MapPin } from 'lucide-react';
 import { invitationConfig } from '@/config/invitation.config';
+import flowersBgImg from '../../../public/decoration/flores_azules_fondo.png';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+const MixedTypoAuto = ({ text, className }: { text: string; className?: string }) => {
+  const words = text.split(' ');
+  return (
+    <span className={className}>
+      {words.map((word, wIdx) => {
+        let targetIdx = word.length > 3 ? 2 : 1;
+        if (word.length <= 1) targetIdx = -1;
+        return (
+          <span key={wIdx} className="inline-block">
+            {word.split('').map((char, cIdx) => {
+              const isLetter = /[a-zA-ZáéíóúÁÉÍÓÚñÑ]/.test(char);
+              if (cIdx === targetIdx && isLetter) {
+                return (
+                  <span key={cIdx} className="font-serif italic lowercase text-[1.2em] mx-[0.05em] opacity-90 inline-block transform -rotate-2">
+                    {char}
+                  </span>
+                );
+              }
+              return <span key={cIdx}>{char}</span>;
+            })}
+            {wIdx < words.length - 1 ? '\u00A0' : ''}
+          </span>
+        );
+      })}
+    </span>
+  );
+};
+
 export function LocationSection() {
   const containerRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-
+  
   useGSAP(() => {
-    // Animación de aparición de los elementos de texto
-    gsap.fromTo('.loc-anim', 
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1, 
-        y: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 75%',
-        }
-      }
+    gsap.fromTo('.loc1-anim', 
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 1.2, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: containerRef.current, start: 'top 80%' } }
     );
-
-    // Efecto parallax de la imagen de fondo (estilo editorial)
-    gsap.fromTo(imageRef.current,
-      { opacity: 0, scale: 1.1, x: 50 },
-      {
-        opacity: 0.15,
-        scale: 1,
-        x: 0,
-        duration: 1.5,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-        }
-      }
+    gsap.fromTo('.loc1-anim-right', 
+      { opacity: 0, x: 50 },
+      { opacity: 1, x: 0, duration: 1.2, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: containerRef.current, start: 'top 80%' } }
     );
+    gsap.to('.rotating-text-1', { rotation: 360, duration: 25, repeat: -1, ease: 'none' });
 
-    // Rotación infinita para el botón circular
-    gsap.to('.rotating-text', {
-      rotation: 360,
-      duration: 25,
-      repeat: -1,
+    // Parallax on the flower to make it feel more dynamic
+    gsap.to('.flower-parallax', {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1,
+      },
+      y: -50,
       ease: 'none'
     });
 
   }, { scope: containerRef });
 
   const { locationName, locationAddress, locationUrl } = invitationConfig.event as any;
-  
-  // Separamos el nombre principal de detalles adicionales si los hay (usando paréntesis)
   const venueTitle = locationName.split('(')[0].trim();
   const venueSubtitle = locationName.includes('(') ? locationName.split('(')[1].replace(')', '').trim() : 'Recepción del Evento';
 
   return (
-    <section 
-      ref={containerRef}
-      className="relative w-full min-h-[50vh] py-16 px-6 md:px-12 flex flex-col justify-center bg-black overflow-hidden z-10"
-    >
-      {/* Imagen de fondo estilo editorial (Lado inferior) */}
-      <div 
-        ref={imageRef}
-        className="absolute bottom-[-10%] right-[-10%] w-[100%] max-w-[800px] h-[70%] z-0 pointer-events-none opacity-0"
-      >
+    <section ref={containerRef} className="py-24 px-6 relative w-full flex flex-col items-center bg-transparent overflow-hidden">
+      
+      {/* Imagen completa en el fondo, cubriendo todo */}
+      <div className="absolute inset-0 opacity-20 w-full h-full pointer-events-none z-0 flower-parallax">
         <Image 
-          src="/decoration/flores_azules_fondo.png" 
-          alt="Decoración Ubicación"
+          src={flowersBgImg} 
+          placeholder="blur"
+          alt="Decoración Ubicación" 
           fill
-          className="object-contain object-bottom md:object-right-bottom opacity-50"
-          sizes="(max-width: 800px) 100vw, 800px"
+          className="object-cover object-center" 
         />
       </div>
 
-      {/* Contenedor Principal con Tipografía Masiva */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col">
+      <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
         
-        {/* Etiqueta Superior */}
-        <p className="loc-anim font-sans text-theme-gold text-xs tracking-[0.4em] uppercase mb-8 flex items-center gap-4 opacity-0">
-          <span className="w-10 h-px bg-theme-gold"></span>
-          El Lugar
-        </p>
+        {/* Left Side: Massive Text */}
+        <div className="md:col-span-8 flex flex-col items-start text-left relative loc1-anim">
+          <h3 className="font-serif italic text-[3rem] md:text-[5rem] text-white leading-none z-10 drop-shadow-md">
+            Recepción &
+          </h3>
+          <div className="relative flex items-start mt-[-1rem] md:mt-[-2rem]">
+            <span 
+              className="font-display text-[6.5rem] md:text-[13rem] text-transparent leading-none z-0 tracking-wider" 
+              style={{ WebkitTextStroke: '0.5px rgba(220,220,220,0.9)' }}
+            >
+              Evento
+            </span>
+          </div>
+          <h2 className="font-sans text-[1.5rem] md:text-[2.5rem] tracking-[0.3em] md:tracking-[0.5em] text-white uppercase mt-[-1rem] md:mt-[-2rem] z-10 font-light drop-shadow-[0_4px_15px_rgba(0,0,0,0.8)] pl-2">
+            <MixedTypoAuto text={venueTitle} />
+          </h2>
+        </div>
 
-        {/* Nombre Masivo */}
-        <h2 className="loc-anim font-display text-[clamp(4.5rem,12vw,10rem)] text-theme-secondary leading-[0.85] font-light mb-8 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] opacity-0">
-          {venueTitle}
-        </h2>
-
-        {/* Divisor y Grid de Dirección */}
-        <div className="loc-anim border-t border-theme-gold/30 pt-8 mt-4 opacity-0">
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-12 md:gap-8 max-w-4xl">
+        {/* Right Side: Narrow Details */}
+        <div className="md:col-span-4 flex justify-start md:justify-end loc1-anim-right w-full">
+          <div className="flex border-l border-theme-gold/40 pl-6 flex-col max-w-[280px] md:max-w-xs items-start">
+            <h3 className="font-sans text-theme-secondary text-[1rem] md:text-[1.1rem] font-light tracking-[0.1em] uppercase mb-2">
+              {venueSubtitle}
+            </h3>
+            <p className="font-sans text-white/60 text-[0.85rem] md:text-[0.9rem] leading-[1.6] tracking-[0.05em] mb-8">
+              {locationAddress}
+            </p>
             
-            {/* Detalles de la Dirección */}
-            <div className="flex flex-col max-w-md">
-              {venueSubtitle && (
-                <h3 className="font-sans text-theme-secondary text-[1.2rem] font-light tracking-[0.1em] uppercase mb-2">
-                  {venueSubtitle}
-                </h3>
-              )}
-              <p className="font-sans text-white/60 text-[0.95rem] leading-[1.6] tracking-[0.05em]">
-                {locationAddress}
-              </p>
-            </div>
+            {/* Botón perfectamente alineado a la izquierda del contenedor de texto */}
+            <a 
+              href={locationUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="group relative block outline-none cursor-pointer mt-4"
+            >
+              <div className="relative w-[115px] h-[115px] flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+                
+                {/* SVG de Texto Rotativo (Cerca del borde) */}
+                <svg viewBox="0 0 100 100" className="rotating-text-1 absolute inset-0 w-full h-full pointer-events-none">
+                  <path id="circlePath1" d="M 50, 50 m -44, 0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" fill="transparent" />
+                  <text className="text-[7.6px] fill-theme-gold font-sans tracking-[0.35em] uppercase font-bold">
+                    <textPath href="#circlePath1" startOffset="0%">
+                      VER EN GOOGLE MAPS • RUTA AL EVENTO • 
+                    </textPath>
+                  </text>
+                </svg>
 
-            {/* Botón Circular Estilo Avant-Garde */}
-            <div className="relative z-50 flex-shrink-0 self-start md:self-auto pointer-events-auto">
-              <a 
-                href={locationUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="group relative block outline-none cursor-pointer"
-                style={{ WebkitTapHighlightColor: 'transparent' }}
-              >
-                <div className="relative w-[110px] h-[110px] rounded-full border border-white/20 flex items-center justify-center text-theme-gold bg-white/5 transition-all duration-300 group-hover:scale-105 group-active:scale-95 shadow-xl hover:bg-white/10">
-                  
-                  {/* SVG de Texto Rotativo */}
-                  <svg viewBox="0 0 100 100" className="rotating-text absolute -inset-4 w-[calc(100%+32px)] h-[calc(100%+32px)] pointer-events-none">
-                    <path id="circleTextPathLocation" d="M 50, 50 m -44, 0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" fill="transparent" />
-                    <text className="text-[7.2px] fill-theme-gold font-sans tracking-[0.25em] uppercase font-bold">
-                      <textPath href="#circleTextPathLocation" startOffset="0%">
-                        VER EN GOOGLE MAPS • RUTA AL EVENTO • 
-                      </textPath>
-                    </text>
-                  </svg>
-                  
-                  <MapPin size={38} strokeWidth={1} className="text-theme-secondary transition-colors group-hover:text-theme-gold pointer-events-none" />
+                {/* Círculo interno con borde y fondo */}
+                <div className="relative w-[82px] h-[82px] rounded-full border border-white/30 flex items-center justify-center text-theme-gold bg-black/40 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.3)] group-hover:bg-white/10 group-hover:border-theme-gold/60 transition-colors">
+                  <MapPin size={28} strokeWidth={1.5} className="text-white group-hover:text-theme-gold transition-colors" />
                 </div>
-              </a>
-            </div>
+                
+              </div>
+            </a>
+            
           </div>
         </div>
-      </div>
 
-      {/* Difuminado hacia la siguiente sección (Dress Code) */}
-      <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none"></div>
+      </div>
+      
+      {/* Degradado inferior para transicionar al Dress Code */}
+      <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-[80%] md:w-[60%] h-[300px] bg-[radial-gradient(ellipse,_rgba(30,58,138,0.2)_0%,_transparent_70%)] blur-[40px] z-0 pointer-events-none" />
+
     </section>
   );
 }

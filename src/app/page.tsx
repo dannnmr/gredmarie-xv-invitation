@@ -16,6 +16,7 @@ import { GiftRegistrySection } from '@/components/sections/GiftRegistrySection';
 import { MusicSection } from '@/components/sections/MusicSection';
 import { RSVPSection } from '@/components/sections/RSVPSection';
 import { FooterSection } from '@/components/sections/FooterSection';
+import { NoiseBackground } from '@/components/ui/NoiseBackground';
 
 export default function Home() {
   const { isOpen, openEnvelope } = useEnvelopeSession();
@@ -35,22 +36,25 @@ export default function Home() {
       />
       
       {/* Contenido principal oculto (y bloqueado el scroll) hasta abrir el sobre */}
-      <main className={`relative w-full ${isOpen ? 'h-auto overflow-visible' : 'h-screen overflow-hidden'}`}>
+      <main className={`relative w-full min-h-screen ${isOpen ? 'h-auto overflow-visible' : 'h-screen overflow-hidden'}`}>
+        {/* Fondo Global */}
+        <NoiseBackground />
+
         <HeroSection isRevealed={isRevealed} />
         <PortraitSection />
         <ParentsSection />
+        {/* Cuenta Regresiva */}
+        <CountdownSection />
         {/* Recepción */}
         <SaveTheDateSection />
 
-        {/* Cuenta Regresiva */}
-        <CountdownSection />
 
         {/* Itinerario Lineal Animado */}
         <ItinerarySection />
         <LocationSection />
         <DressCodeSection />
         <GiftRegistrySection />
-        <MusicSection />
+        {/* <MusicSection /> */}
         <RSVPSection />
         <FooterSection />
         

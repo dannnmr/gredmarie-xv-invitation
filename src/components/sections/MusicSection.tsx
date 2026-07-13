@@ -6,7 +6,6 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { Send, CheckCircle2, RotateCw } from 'lucide-react';
-import { invitationConfig } from '@/config/invitation.config';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -80,9 +79,8 @@ export function MusicSection() {
         <Image 
           src="/decoration/bola disco.png" 
           alt="Bola de disco" 
-          width={350} 
-          height={350} 
-          className="object-contain grayscale mix-blend-screen w-full h-auto" 
+          fill 
+          className="object-contain grayscale mix-blend-screen" 
         />
       </div>
 

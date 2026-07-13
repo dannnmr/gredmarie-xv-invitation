@@ -1,157 +1,132 @@
 'use client';
-
-import { useRef, useState } from 'react';
-import Image from 'next/image';
-import { useGSAP } from '@gsap/react';
+import { useState, useRef } from 'react';
 import gsap from 'gsap';
-import { invitationConfig } from '@/config/invitation.config';
+import { useGSAP } from '@gsap/react';
+import Image from 'next/image';
+import { FairyDust } from '@/components/ui/FairyDust';
+import { useRSVPForm } from '@/hooks/useRSVPForm';
 
 export function RSVPSection() {
+  const [isRevealed, setIsRevealed] = useState(false);
+  
   const containerRef = useRef<HTMLDivElement>(null);
-  const formCardRef = useRef<HTMLDivElement>(null);
-  const buttonShimmerRef = useRef<HTMLDivElement>(null);
+  const leftDoorRef = useRef<HTMLDivElement>(null);
+  const rightDoorRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
-  const [guestName, setGuestName] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState('');
-
-  useGSAP(() => {
-    // Animación de entrada de la tarjeta
-    gsap.from(formCardRef.current, {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top 80%',
-      },
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out'
-    });
-
-    // Animación de shimmer (brillo) en el botón si no se está enviando
-    if (buttonShimmerRef.current) {
-      gsap.to(buttonShimmerRef.current, {
-        x: '200%',
-        duration: 3,
-        repeat: -1,
-        ease: 'linear'
-      });
+  const {
+    guestName,
+    formState,
+    errorMessage,
+    submitBtnRef,
+    handleChange,
+    handleSubmit
+  } = useRSVPForm({
+    onSuccess: () => {
+      setIsRevealed(true);
+      const tl = gsap.timeline();
+      
+      // Ocultar formulario primero suavemente
+      tl.to(formRef.current, { opacity: 0, duration: 0.3 })
+        // Split (Abrir cortinas)
+        .to(leftDoorRef.current, { x: '-100%', duration: 1.2, ease: 'power4.inOut' }, 'split')
+        .to(rightDoorRef.current, { x: '100%', duration: 1.2, ease: 'power4.inOut' }, 'split');
     }
+  });
 
-    // Animación flotante de la bola de disco
-    gsap.to('.rsvp-disco', { y: -15, duration: 4, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-
-  }, { scope: containerRef });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!guestName.trim()) {
-      setError('Por favor, ingresa tu nombre.');
-      return;
-    }
-
-    setIsSubmitting(true);
-    setError('');
-
-    // Simulación de Webhook
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 1500);
-  };
+  const isSubmitting = formState === 'submitting';
 
   return (
-    <section 
-      ref={containerRef}
-      className="py-16 px-6 relative w-full flex items-center justify-center bg-black overflow-hidden"
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse,_rgba(30,58,138,0.15)_0%,_transparent_70%)] blur-[50px] z-0 pointer-events-none" />
-
-      {/* Bolas de disco de fondo */}
-      <div className="absolute top-[-5%] md:top-[0%] left-1/2 -translate-x-1/2 w-[80%] md:w-[60%] max-w-[450px] z-0 pointer-events-none opacity-50 rsvp-disco mix-blend-screen">
-        <Image src="/hero/bolas_disco_azul.png" alt="Bolas de Disco" width={400} height={200} className="object-contain w-full h-auto" />
+    <section ref={containerRef} className="w-full flex flex-col items-center py-24 px-4 overflow-hidden bg-transparent z-40 relative">
+      
+      {/* Título de la Sección */}
+      <div className="text-center mb-10 z-10">
+        <span className="font-sans text-[10px] md:text-xs uppercase tracking-[0.6em] text-theme-gold block drop-shadow-md">Lista de Invitados</span>
       </div>
 
-      <div 
-        ref={formCardRef}
-        className="relative z-10 w-full max-w-[420px] bg-white/[0.015] border border-white/20 rounded-[30px] p-10 shadow-[0_20px_60px_rgba(0,0,0,0.8),_0_0_40px_rgba(192,192,192,0.15),_inset_0_0_30px_rgba(192,192,192,0.05)] backdrop-blur-md"
-      >
-        {/* Destello de cristal superior */}
-        <div className="absolute top-0 left-[20%] right-[20%] h-[1.5px] bg-gradient-to-r from-transparent via-white/80 to-transparent" />
+      <div className="relative w-full max-w-4xl h-[600px] flex items-center justify-center border border-theme-gold/20 bg-black overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.8)]">
+        
+        {/* === FONDO: REVELACIÓN DE ÉXITO === */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center z-0">
+          <span className="font-sans text-[10px] text-theme-gold tracking-[0.4em] uppercase mb-4">Confirmado</span>
+          <h2 className="font-serif italic text-5xl md:text-7xl text-white mb-6">Gracias</h2>
+          <span className="font-display text-4xl text-theme-gold/50">{guestName}</span>
+        </div>
 
-        {!isSuccess ? (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+        {/* === CORTINA IZQUIERDA === */}
+        <div ref={leftDoorRef} className="absolute inset-y-0 left-0 w-1/2 bg-[#0a0d14] border-r border-theme-gold/30 z-10 overflow-hidden flex flex-col p-6 md:p-12">
+          {/* Imagen de luces */}
+          <div className="absolute top-[10%] left-[-40%] md:right-[5%] opacity-20 w-100 md:w-150 pointer-events-none z-0">
+            <FairyDust count={20} />
+          </div>
+          <div className="absolute inset-0 z-0 opacity-50 mix-blend-screen pointer-events-none">
+            <Image src="/decoration/luces_colg.png" alt="Luces" fill className="object-cover object-top" sizes="(max-width: 768px) 50vw, 33vw" />
+          </div>
+
+          {/* Elementos asimétricos estilo Vogue */}
+          <div className="mb-4 relative z-10">
+            <span className="font-sans text-[8px] md:text-[10px] uppercase tracking-[0.5em] text-theme-gold block mb-2">Issue No. 15</span>
+            <span className="font-serif italic text-white/50 text-xs md:text-sm">Gredmarie's Celebration</span>
+          </div>
+
+          <div className="flex flex-col items-start w-[200vw] md:w-full mt-2 relative z-10">
+            <h2 className="font-display text-[3rem] md:text-[6rem] leading-[0.8] text-white tracking-wider">
+              RSVP
+            </h2>
+          </div>
+        </div>
+        
+        {/* === CORTINA DERECHA === */}
+        <div ref={rightDoorRef} className="absolute inset-y-0 right-0 w-1/2 bg-[#0a0d14] z-10 overflow-hidden flex flex-col justify-end p-6 md:p-12">
+          {/* Imagen de luces (Espejo) */}
+          <div className="absolute inset-0 z-0 opacity-50 mix-blend-screen pointer-events-none -scale-x-100">
+            <Image src="/decoration/luces_colg.png" alt="Luces" fill className="object-cover object-top" sizes="(max-width: 768px) 50vw, 33vw" />
+          </div>
+
+          <div className="flex flex-col items-end w-[200vw] md:w-full text-right absolute bottom-6 md:bottom-12 right-6 md:right-12 z-10">
+            <div className="w-24 h-[1px] bg-theme-gold mt-6" />
+          </div>
+        </div>
+
+        {/* === FORMULARIO CENTRAL === */}
+        {!isRevealed && (
+          <div ref={formRef} className="absolute z-20 flex flex-col items-center justify-center w-full max-w-[500px] mt-[15vh]">
             
-            {/* Header del Formulario */}
-            <div className="text-center">
-              <span className="font-sans text-[0.65rem] text-theme-gold tracking-[0.3em] uppercase font-semibold block mb-4">
-                Lista de Invitados
-              </span>
-              <h2 className="font-display text-6xl md:text-7xl text-theme-secondary font-normal leading-none mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-                RSVP
-              </h2>
-              <p className="font-sans text-[0.7rem] text-white/70 tracking-[1px] uppercase leading-relaxed max-w-[380px] mx-auto">
-                Por favor, confírmanos tu presencia.
-              </p>
-            </div>
-            
-            {/* Input Lineal Minimalista */}
-            <div className="flex flex-col gap-2 relative">
-              <label className="font-sans text-[0.65rem] text-theme-gold uppercase tracking-[0.15em] font-semibold">
-                Nombre Completo
-              </label>
-              <div className="relative group">
+            <div className="w-[320px] bg-white/5 backdrop-blur-2xl border border-white/10 flex flex-col items-center justify-center p-10 relative">
+              
+              <div className="text-center mb-10">
+                <span className="font-sans text-[10px] text-white/50 tracking-[0.4em] uppercase">Confirmación</span>
+              </div>
+              
+              <form onSubmit={handleSubmit} className="flex flex-col items-center w-full relative z-10">
                 <input 
                   type="text" 
-                  value={guestName} 
-                  onChange={(e) => setGuestName(e.target.value)} 
-                  placeholder="Ej. Familia Pérez" 
-                  disabled={isSubmitting}
-                  className="w-full bg-transparent border-none border-b-2 border-white/20 pb-2 text-theme-secondary font-sans text-base outline-none transition-all duration-300 focus:border-theme-gold focus:shadow-[0_10px_15px_-10px_rgba(192,192,192,0.4)] placeholder:text-white/20"
+                  value={guestName}
+                  onChange={e => handleChange(e.target.value)}
+                  placeholder="Tu Nombre Completo"
+                  className="w-full bg-transparent border-b border-white/20 pb-3 text-center text-white font-serif italic text-2xl outline-none focus:border-white placeholder:text-white/20 transition-colors"
+                  disabled={isSubmitting || formState === 'success'}
+                  required
                 />
-              </div>
+                
+                {errorMessage && (
+                  <p className="text-red-400 text-xs mt-4 text-center">{errorMessage}</p>
+                )}
+
+                <button 
+                  ref={submitBtnRef}
+                  type="submit" 
+                  disabled={isSubmitting || !guestName.trim() || formState === 'success'} 
+                  className="mt-10 w-full py-4 bg-white text-black font-sans font-bold text-[10px] tracking-[0.3em] uppercase hover:bg-theme-gold transition-colors disabled:opacity-30"
+                >
+                  {isSubmitting ? 'Registrando...' : 'Confirmar Asistencia'}
+                </button>
+              </form>
             </div>
-            
-            {/* Error */}
-            <div className="h-4 flex items-center justify-center -mt-6">
-              {error && <p className="text-red-400 text-xs font-sans font-bold m-0">{error}</p>}
-            </div>
-            
-            {/* Botón Editorial de Alto Contraste */}
-            <button 
-              type="submit" 
-              disabled={isSubmitting}
-              className="relative overflow-hidden bg-theme-gold border-none rounded-[50px] text-theme-primary cursor-pointer font-sans text-[0.85rem] tracking-[0.2em] font-extrabold uppercase py-4 w-full shadow-[0_10px_20px_rgba(192,192,192,0.15)] transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed"
-            >
-              {/* Shimmer Animado */}
-              <div 
-                ref={buttonShimmerRef}
-                className="absolute top-0 -left-full w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-[20deg] z-[1]"
-              />
-              <span className="relative z-[2]">
-                {isSubmitting ? 'Enviando...' : 'Confirmar Asistencia'}
-              </span>
-            </button>
-          </form>
-        ) : (
-          /* Mensaje de Éxito Consolidado */
-          <div className="text-center flex flex-col gap-4 items-center py-4">
-            <div className="w-[70px] h-[70px] rounded-full border-2 border-white/80 flex items-center justify-center text-theme-gold text-4xl mb-2 shadow-[0_0_30px_rgba(192,192,192,0.4)] bg-white/10">
-              ✓
-            </div>
-            <span className="font-sans text-[0.7rem] text-theme-gold tracking-[0.3em] uppercase font-bold">
-              ¡Te esperamos!
-            </span>
-            <h2 className="font-display text-5xl md:text-6xl text-theme-secondary font-light leading-none">
-              Confirmado
-            </h2>
-            <div className="w-[40px] h-[1.5px] bg-theme-gold my-2" />
-            <p className="font-sans text-[0.85rem] text-white/70 leading-relaxed max-w-[360px]">
-              Gracias {guestName}, tu respuesta ha sido guardada. Nos hace muy felices saber que nos acompañarás.
-            </p>
+
           </div>
         )}
+
       </div>
     </section>
   );

@@ -20,7 +20,7 @@ export const invitationConfig = {
   },
   itinerary: [
     { time: '19:00', title: 'Bienvenida', description: 'Recepción inicial.', icon: 'sparkles' },
-    { time: '19:30', title: 'Recepción Social', description: 'Hora de llegada de los invitados.', icon: 'martini' },
+    { time: '19:30', title: 'Recepción Social', description: 'Hora de llegada!.', icon: 'martini' },
     { time: '21:00', title: 'Ceremonia', description: 'Ceremonia principal.', icon: 'heart' },
     { time: '21:40', title: 'Sesión de Fotos', description: 'Capturando recuerdos.', icon: 'camera' },
     { time: '22:00', title: 'Cena', description: 'Disfrutemos juntos.', icon: 'utensils' },
@@ -35,7 +35,7 @@ export const invitationConfig = {
     colors: ['#C0C0C0', '#0000FF', '#87CEEB'] // Plateado, Azul, Celeste
   },
   giftRegistry: {
-    message: 'Tu presencia es nuestro mejor regalo. Si deseas tener un detalle, puedes usar el siguiente código QR:',
+    message: 'Tu presencia es mi mejor regalo. Si deseas tener un detalle, puedes usar el siguiente código QR:',
     qrImage: '/images/qr-gift.png', // Placeholder para la imagen del QR
   },
   music: {

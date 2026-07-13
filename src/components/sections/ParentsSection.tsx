@@ -13,70 +13,101 @@ if (typeof window !== 'undefined') {
 
 export function ParentsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.parents-text', {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-        },
-        y: 30,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out'
-      });
-    }, containerRef);
-    return () => ctx.revert();
-  }, { scope: containerRef });
-
   const { parents } = invitationConfig;
 
+  useGSAP(() => {
+    // Animación de aparición de la línea dividida
+    gsap.fromTo('.split-line-left, .split-line-right',
+      { scaleX: 0, transformOrigin: 'outer' },
+      { scaleX: 1, duration: 2, ease: 'power4.inOut', scrollTrigger: { trigger: containerRef.current, start: 'top 75%' } }
+    );
+    // Configurar transformOrigin: izquierda dibuja a la derecha (right), derecha dibuja a la izquierda (left)
+    gsap.set('.split-line-left', { transformOrigin: 'right center' });
+    gsap.set('.split-line-right', { transformOrigin: 'left center' });
+    gsap.fromTo('.split-text-top',
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1.5, delay: 1, ease: 'power3.out', scrollTrigger: { trigger: containerRef.current, start: 'top 75%' } }
+    );
+    gsap.fromTo('.split-text-bottom',
+      { opacity: 0, y: -20 },
+      { opacity: 1, y: 0, duration: 1.5, delay: 1.5, ease: 'power3.out', scrollTrigger: { trigger: containerRef.current, start: 'top 75%' } }
+    );
+    
+    // Animación del Ampersand
+    gsap.fromTo('.ampersand-outline',
+      { opacity: 0, scale: 0.5 },
+      { opacity: 1, scale: 1, duration: 2, delay: 0.8, ease: 'power2.out', scrollTrigger: { trigger: containerRef.current, start: 'top 75%' } }
+    );
+
+    // Parallax para la flor
+    gsap.to('.parents-parallax', {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.5,
+      },
+      y: -60,
+      ease: 'none'
+    });
+
+    // Efecto flotante infinito
+    gsap.to('.flower-float', {
+      y: 20,
+      rotation: 2,
+      duration: 4,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut'
+    });
+
+  }, { scope: containerRef });
+
   return (
-    <section 
-      ref={containerRef}
-      className="py-24 px-6 relative w-full flex flex-col items-center text-center bg-theme-primary text-theme-secondary overflow-hidden"
-    >
-      <div className="absolute inset-0 bg-theme-accent/5 pointer-events-none z-0"></div>
+    <section ref={containerRef} className="py-12 md:py-16 px-6 relative w-full flex flex-col items-center justify-center bg-transparent overflow-hidden">
       
-      {/* Elementos Decorativos de Estrellas para continuidad */}
-      <div className="absolute inset-0 w-full h-full opacity-20 pointer-events-none z-0 mix-blend-screen">
-        <Image src="/decoration/flor_blanca.png" alt="Línea de estrellas" fill className="object-cover md:object-contain object-bottom" />
+      {/* Elementos Decorativos de la flor con Parallax y Flotación */}
+      <div className="absolute inset-0 w-full h-full opacity-15 pointer-events-none z-0 mix-blend-screen parents-parallax pt-10">
+        <div className="w-full h-full flower-float relative">
+          <Image src="/decoration/flor_blanca.png" alt="Flor decorativa" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain object-center md:scale-100 scale-125" />
+        </div>
       </div>
 
-      <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
-        <h3 className="parents-text font-serif text-lg md:text-xl text-theme-gold/80 italic mb-5">
-          {parents.topLabel}
-        </h3>
-        
-        <div className="parents-text flex flex-col items-center gap-4 mb-16">
-          <p className="font-display text-4xl md:text-5xl text-theme-secondary tracking-wide drop-shadow-[0_0_8px_rgba(192,192,192,0.3)]">
-            {parents.fatherName}
-          </p>
-          <span className="font-sans text-sm tracking-[0.3em] text-theme-gold">&</span>
-          <p className="font-display text-4xl md:text-5xl text-theme-secondary tracking-wide drop-shadow-[0_0_8px_rgba(192,192,192,0.3)]">
-            {parents.motherName}
-          </p>
+      <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center text-center">
+        <div className="split-text-top mb-8">
+          <h3 className="font-serif text-sm md:text-base text-slate-300 italic uppercase tracking-[0.3em]">
+            {parents.topLabel}
+          </h3>
         </div>
-{/* 
-        {parents.godparents && parents.godparents.length > 0 && (
-          <div className="parents-text mb-16">
-            <h4 className="font-sans text-xs tracking-[0.2em] uppercase text-theme-gold mb-6">Padrinos</h4>
-            <div className="flex flex-col gap-4">
-              {parents.godparents.map((gp, idx) => (
-                <p key={idx} className="font-serif text-lg text-theme-secondary">
-                  <span className="italic opacity-70 block text-sm mb-1">{gp.role}</span>
-                  {gp.couple}
-                </p>
-              ))}
+        
+        <div className="w-full flex flex-col items-center justify-center relative">
+          {/* Nombre del padre (arriba) */}
+          <div className="split-text-top text-3xl sm:text-4xl md:text-5xl font-display text-white tracking-wider mb-4 z-20 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+            {parents.fatherName}
+          </div>
+          
+          {/* Contenedor central: Línea + Ampersand */}
+          <div className="relative w-full flex items-center justify-center h-10">
+            {/* Ampersand contorneado (centro) */}
+            <div 
+              className="ampersand-outline absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl md:text-6xl font-serif text-transparent z-10 select-none px-6"
+              style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}
+            >
+              &
+            </div>
+
+            {/* Línea divisoria plateada con hueco transparente al medio */}
+            <div className="flex w-full items-center justify-between z-0">
+              <div className="split-line-left w-[35%] md:w-[42%] h-[1px] bg-gradient-to-r from-transparent to-white/80 shadow-[0_0_8px_rgba(255,255,255,0.5)]"></div>
+              <div className="split-line-right w-[35%] md:w-[42%] h-[1px] bg-gradient-to-l from-transparent to-white/80 shadow-[0_0_8px_rgba(255,255,255,0.5)]"></div>
             </div>
           </div>
-        )} */}
-
-        <p className="parents-text font-serif text-sm md:text-base leading-relaxed tracking-wider text-theme-secondary/80 max-w-md mt-1">
-          {parents.invitationText}
-        </p>
+          
+          {/* Nombre de la madre (abajo) */}
+          <div className="split-text-bottom text-3xl sm:text-4xl md:text-5xl font-display text-white tracking-wider mt-4 z-20 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+            {parents.motherName}
+          </div>
+        </div>
       </div>
     </section>
   );

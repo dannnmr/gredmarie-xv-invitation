@@ -6,6 +6,12 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { invitationConfig } from '@/config/invitation.config';
+import { FairyDust } from '@/components/ui/FairyDust';
+
+import discoBallsImg from '../../../public/hero/bolas_disco_azul.png';
+import starsWhiteImg from '../../../public/decoration/estrellas_blanco.png';
+import heroBgImg from '../../../public/hero/copa_azul_fondo.png';
+import heroNameImg from '../../../public/hero/gredmarie_nombre.png';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -80,9 +86,7 @@ export function HeroSection({ isRevealed }: HeroSectionProps) {
       );
     }
 
-    // Animación flotante para las decoraciones
-    gsap.to('.floating-deco-1', { y: -20, rotation: 5, duration: 4, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    gsap.to('.floating-deco-3', { y: -15, rotation: 10, duration: 6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    // GSAP removed for stardust, replaced with CSS animations for better performance.
 
     // Animación reluciente (shimmer) para el XV gigante
     gsap.to('.hero-xv-text', {
@@ -97,21 +101,26 @@ export function HeroSection({ isRevealed }: HeroSectionProps) {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full h-[100svh] min-h-screen overflow-hidden flex items-center justify-center bg-black"
+      className="relative w-full h-[100svh] min-h-screen overflow-hidden flex items-center justify-center bg-transparent"
     >
 
       {/* Elementos Decorativos */}
       {/* Bola de Disco Colgante */}
       <div className="absolute top-[0%] left-1/2 -translate-x-1/2 w-[70%] md:w-[60%] max-w-[500px] z-10 pointer-events-none floating-disco opacity-90">
-        <Image src="/hero/bolas_disco_azul.png" alt="Bolas de Disco" width={400} height={200} className="object-contain w-full h-auto" priority />
+        <Image src={discoBallsImg} placeholder="blur" alt="Bolas de Disco" className="object-contain w-full h-auto" priority loading="eager" />
       </div>
 
-      <div className="absolute top-[15%] left-[-8%] opacity-60 w-56 md:w-55 pointer-events-none z-10 floating-deco-1">
-        <Image src="/decoration/estrellas_blanco.png" alt="Estrellas" width={100} height={100} className="object-contain w-full h-auto" />
+      {/* Polvo de Estrellas (CSS puro alto rendimiento, color blanco/plateado) */}
+      <div className="absolute top-[15%] left-[5%] md:left-[10%] opacity-70 w-16 md:w-24 pointer-events-none z-10 animate-pulse">
+        <Image src={starsWhiteImg} alt="Estrellas" className="object-contain w-full h-auto animate-[spin_25s_linear_infinite]" />
       </div>
  
-      <div className="absolute bottom-[25%] right-[-5%] md:left-[10%] opacity-80 w-56 md:w-55 pointer-events-none z-10 floating-deco-3">
-        <Image src="/decoration/estrellas_blanco.png" alt="Estrellas" width={150} height={150} className="object-contain w-full h-auto" />
+      <div className="absolute bottom-[35%] right-[5%] md:right-[15%] opacity-50 w-12 md:w-16 pointer-events-none z-10 animate-pulse" style={{ animationDelay: '1.5s' }}>
+        <Image src={starsWhiteImg} alt="Estrellas" className="object-contain w-full h-auto animate-[spin_15s_linear_infinite_reverse]" />
+      </div>
+
+      <div className="absolute top-[40%] left-[10%] opacity-40 w-8 md:w-12 pointer-events-none z-10 animate-pulse" style={{ animationDelay: '0.8s' }}>
+        <Image src={starsWhiteImg} alt="Estrellas" className="object-contain w-full h-auto animate-[spin_20s_linear_infinite]" />
       </div>
 
       {/* Imagen de Fondo (Parallax) */}
@@ -120,14 +129,20 @@ export function HeroSection({ isRevealed }: HeroSectionProps) {
         className="absolute inset-[-2%] z-0"
       >
         <Image
-          src={invitationConfig.assets.heroBackground}
+          src={heroBgImg}
+          placeholder="blur"
           alt="Hero Background"
           fill
           priority
           className="object-cover object-center"
         />
         {/* Gradiente Oscuro para Legibilidad */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.7)_0%,rgba(0,0,0,0.4)_40%,rgba(0,0,0,0.1)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.5)_0%,rgba(0,0,0,0.3)_40%,rgba(0,0,0,0.1)_100%)]" />
+      </div>
+
+      {/* FairyDust después del fondo para que no quede tapado */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        <FairyDust count={25} />
       </div>
 
       {/* Contenedor Principal (Fade on Scroll) */}
@@ -162,8 +177,7 @@ export function HeroSection({ isRevealed }: HeroSectionProps) {
               ref={nameRef}
               className="relative z-10 w-full max-w-[600px] flex justify-center opacity-0 drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)]"
             >
-              {/* Se usa un PNG con el nombre estilizado. Placeholder por ahora */}
-              <img src="/hero/gredmarie_nombre.png" alt={invitationConfig.client.name} className="w-[110%] h-auto object-contain" />
+              <Image src={heroNameImg} placeholder="blur" alt={invitationConfig.client.name} priority className="w-[110%] h-auto object-contain" />
             </div>
           </div>
         </div>
@@ -178,8 +192,8 @@ export function HeroSection({ isRevealed }: HeroSectionProps) {
 
       </div>
 
-      {/* Difuminado hacia la sección Portrait */}
-      <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none"></div>
+      {/* Difuminado hacia la siguiente sección para mezclar con el fondo principal */}
+      <div className="absolute bottom-0 left-0 w-full h-48 md:h-64 bg-gradient-to-t from-[#010308] to-transparent z-20 pointer-events-none"></div>
     </section>
   );
 }

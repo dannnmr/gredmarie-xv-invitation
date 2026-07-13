@@ -88,7 +88,7 @@ export function AudioPlayer() {
       />
       <button 
         onClick={togglePlay}
-        className="fixed bottom-6 right-6 z-[9999] w-14 h-14 bg-theme-accent/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.5)] border border-theme-gold/50 text-theme-gold transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+        className="fixed bottom-6 right-6 z-[9999] w-14 h-14 bg-[#bde0fe]/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(189,224,254,0.5)] border border-white/50 text-slate-800 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
         aria-label="Toggle music"
       >
         {isPlaying ? <Volume2 size={28} /> : <VolumeX size={28} />}
