@@ -88,8 +88,8 @@ export function LocationSection() {
   return (
     <section ref={containerRef} className="py-24 px-6 relative w-full flex flex-col items-center bg-transparent overflow-hidden">
       
-      {/* Imagen completa en el fondo, cubriendo todo */}
-      <div className="absolute inset-0 opacity-20 w-full h-full pointer-events-none z-0 flower-parallax">
+      {/* Imagen completa en el fondo, con extra altura para evitar gap por el parallax */}
+      <div className="absolute top-[-100px] bottom-[-100px] left-0 right-0 opacity-20 w-full pointer-events-none z-0 flower-parallax">
         <Image 
           src={flowersBgImg} 
           placeholder="blur"
@@ -164,6 +164,10 @@ export function LocationSection() {
       
       {/* Degradado inferior para transicionar al Dress Code */}
       <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-[80%] md:w-[60%] h-[300px] bg-[radial-gradient(ellipse,_rgba(30,58,138,0.2)_0%,_transparent_70%)] blur-[40px] z-0 pointer-events-none" />
+
+      {/* Gradientes negros superior e inferior para fusionar fondos */}
+      <div className="absolute top-0 left-0 right-0 h-[150px] bg-gradient-to-b from-[#010308] to-transparent z-10 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-[150px] bg-gradient-to-t from-[#010308] to-transparent z-10 pointer-events-none" />
 
     </section>
   );

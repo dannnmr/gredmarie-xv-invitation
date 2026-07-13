@@ -137,7 +137,7 @@
 
       {/* Polvo de estrellas restaurado */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-100">
-        <FairyDust count={120} />
+        <FairyDust count={35} />
       </div>
 
       {/* Contenedor Principal de la Foto */}
@@ -193,6 +193,12 @@
           />
         </div>
       </div>
+
+      {/* Luz azul/plateada difuminada en la parte inferior similar a DressCode */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[200px] bg-[radial-gradient(ellipse,_rgba(30,58,138,0.2)_0%,_transparent_70%)] blur-[40px] z-0 pointer-events-none" />
+      
+      {/* Gradiente inferior para fusionar con la siguiente sección */}
+      <div className="absolute bottom-0 left-0 right-0 h-[100px] bg-gradient-to-t from-black to-transparent z-10 pointer-events-none" />
     </section>
   );
 }
