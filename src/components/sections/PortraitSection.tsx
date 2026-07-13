@@ -125,9 +125,9 @@
       <div className="scroll-dim absolute inset-0 bg-[#010308] z-[-1] pointer-events-none"></div>
 
       {/* Fondo de Luces Brillantes (detrás de la foto) */}
-      <div className="portrait-glow-bg absolute inset-0 z-0 opacity-80 pointer-events-none">
+      <div className="portrait-glow-bg absolute inset-0 z-0 opacity-30 pointer-events-none">
         <Image
-          src="/decoration/luces_brill.png"
+          src="/decoration/luces_brill2.webp"
           alt="Luces brillantes"
           fill
           sizes="100vw"
