@@ -44,7 +44,7 @@ export function DressCodeSection() {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full py-20 px-6 flex flex-col items-center justify-center bg-transparent overflow-hidden"
+      className="relative w-full py-10 px-6 flex flex-col items-center justify-center bg-transparent overflow-hidden"
     >
       {/* Luz azul/plateada de fondo para el glassmorphism */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[400px] bg-[radial-gradient(ellipse,_rgba(30,58,138,0.2)_0%,_transparent_70%)] blur-[40px] z-0 pointer-events-none" />
@@ -71,22 +71,22 @@ export function DressCodeSection() {
         </span>
         
         {/* Encabezado Outline (Estilo Evento) */}
-        <div className="relative flex items-start justify-center mt-2 mb-4 w-full">
+        <div className="relative flex flex-col items-center justify-center mt-2 mb-1 w-full">
           <span 
             className="font-display text-[3rem] md:text-[5rem] text-transparent leading-[0.85] z-0 tracking-wider text-center drop-shadow-md"
             style={{ WebkitTextStroke: '0.5px rgba(220,220,220,0.9)' }} 
           >
             Dress Code
           </span>
-          <span className="font-serif italic text-xl text-theme-gold absolute right-[10%] md:right-[5%] top-2 opacity-90">
-            
+          <span className="font-serif text-2xl md:text-3xl tracking-widest text-theme-gold mt-2 font-semibold">
+            FORMAL
           </span>
         </div>
 
         {/* Elemento flotante con la imagen real */}
         <div 
           ref={floatRef}
-          className="relative w-full max-w-[180px] h-[180px] mt-2 mb-6 z-[1] drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] flex items-center justify-center pointer-events-none"
+          className="relative w-full max-w-[180px] h-[180px] mt-2 mb-1 z-[1] drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] flex items-center justify-center pointer-events-none"
         >
            <Image 
              src={dressCodeImg} 
@@ -99,7 +99,7 @@ export function DressCodeSection() {
         </div>
         
         {/* Círculos de texturas de colores */}
-        <div className="flex flex-wrap justify-center gap-3 mb-6 z-10 relative">
+        <div className="flex flex-wrap justify-center gap-3 mb-3 z-10 relative">
           {dressCode.colors?.map((color, idx) => (
             <div 
               key={idx} 
