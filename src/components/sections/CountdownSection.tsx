@@ -8,6 +8,18 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useCountdown } from '@/hooks/useCountdown';
 import { invitationConfig } from '@/config/invitation.config';
 
+const EightPointStarSVG = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="50,0 51.9,45.4 67.7,32.3 54.6,48.1 100,50 54.6,51.9 67.7,67.7 51.9,54.6 50,100 48.1,54.6 32.3,67.7 45.4,51.9 0,50 45.4,48.1 32.3,32.3 48.1,45.4" fill="white" />
+  </svg>
+);
+
+const HollowStarSVG = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" stroke="white" strokeWidth="2" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="50,5 61,35 95,35 68,54 78,85 50,65 22,85 32,54 5,35 39,35" strokeLinejoin="round" />
+  </svg>
+);
+
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -65,6 +77,40 @@ export function CountdownSection() {
       ease: 'none'
     });
 
+    // Animaciones para las nuevas estrellas
+    gsap.to('.animated-star', {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        toggleActions: 'play pause resume pause',
+      },
+      opacity: 0.4,
+      scale: 1.2,
+      duration: 'random(1, 2)',
+      yoyo: true,
+      repeat: -1,
+      ease: 'power1.inOut',
+      stagger: { each: 0.2, from: 'random' }
+    });
+
+    gsap.to('.animated-star-float', {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        toggleActions: 'play pause resume pause',
+      },
+      y: '-=15',
+      x: 'random(-5, 5)',
+      rotation: 'random(-15, 15)',
+      duration: 'random(2.5, 4)',
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut',
+      stagger: { each: 0.3, from: 'random' }
+    });
+
   }, { scope: containerRef });
 
   const items = [
@@ -93,15 +139,13 @@ export function CountdownSection() {
         />
       </div>
 
-      {/* Estrellas Flotantes (Animación CSS pulse/spin) */}
-      <div className="absolute top-[10%] right-[-2%] opacity-40 w-28 md:w-34 pointer-events-none z-0 cd-parallax-1 animate-pulse">
-        <Image src="/decoration/estrellas_blanco.png" alt="Estrellas" width={120} height={120} className="object-contain w-full h-auto animate-[spin_20s_linear_infinite_reverse]" />
-      </div>
-      <div className="absolute bottom-[10%] right-[20%] opacity-20 w-8 md:w-12 pointer-events-none z-0 animate-pulse" style={{ animationDelay: '1s' }}>
-        <Image src="/decoration/estrellas_blanco.png" alt="Estrellas" width={60} height={60} className="object-contain w-full h-auto animate-[spin_15s_linear_infinite]" />
-      </div>
-      <div className="absolute top-[30%] left-[25%] opacity-30 w-10 md:w-16 pointer-events-none z-0 animate-pulse" style={{ animationDelay: '2s' }}>
-        <Image src="/decoration/estrellas_blanco.png" alt="Estrellas" width={80} height={80} className="object-contain w-full h-auto animate-[spin_25s_linear_infinite]" />
+      {/* Estrellas Flotantes SVG (Animadas con GSAP) */}
+      <div className="absolute inset-0 z-0 pointer-events-none cd-parallax-1">
+        <EightPointStarSVG className="animated-star animated-star-float absolute top-[10%] right-[10%] w-16 h-16 drop-shadow-[0_0_8px_white]" />
+        <HollowStarSVG className="animated-star animated-star-float absolute bottom-[20%] right-[20%] w-12 h-12 drop-shadow-[0_0_6px_white]" />
+        <EightPointStarSVG className="animated-star animated-star-float absolute top-[30%] left-[20%] w-10 h-10 drop-shadow-[0_0_8px_white]" />
+        <EightPointStarSVG className="animated-star animated-star-float absolute bottom-[10%] left-[10%] w-8 h-8 drop-shadow-[0_0_8px_white]" />
+        <HollowStarSVG className="animated-star animated-star-float absolute top-[50%] right-[5%] w-6 h-6 drop-shadow-[0_0_6px_white]" />
       </div>
 
       {/* Títulos */}

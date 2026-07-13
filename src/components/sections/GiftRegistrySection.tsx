@@ -137,7 +137,7 @@ export function GiftRegistrySection() {
                 className="relative w-full h-full bg-white p-2 rounded-sm flex items-center justify-center cursor-zoom-in group/inner transition-transform hover:scale-105"
                 onClick={(e) => { e.stopPropagation(); setIsExpanded(true); }}
               >
-                <Image src={qrUrl} alt="Código QR" fill className="object-contain p-2" />
+                <Image src={qrUrl} alt="Código QR" fill sizes="(max-width: 768px) 150px, 200px" className="object-contain p-2" />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/inner:opacity-100 flex items-center justify-center transition-opacity duration-300">
                   <span className="text-white font-sans text-[8px] uppercase tracking-widest bg-black/60 px-2 py-1 rounded">Ver Mejor</span>
                 </div>

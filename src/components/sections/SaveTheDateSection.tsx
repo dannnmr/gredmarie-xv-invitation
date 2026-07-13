@@ -103,7 +103,7 @@ export function SaveTheDateSection() {
     >
       {/* Elementos Decorativos de Estrellas con Parallax */}
       <div className="absolute inset-0 w-full h-full opacity-40 pointer-events-none z-0 mix-blend-screen std-parallax-1 ">
-        <Image src="/decoration/strellas_linea.png" alt="Línea de estrellas" fill className="object-cover md:object-contain object-bottom rotate-180" />
+        <Image src="/decoration/strellas_linea.png" alt="Línea de estrellas" fill sizes="100vw" className="object-cover md:object-contain object-bottom rotate-180" />
       </div>
       <div className="absolute top-[25%] right-[5%] opacity-50 w-16 md:w-24 pointer-events-none z-0 std-parallax-2 animate-[pulse_5s_ease-in-out_infinite]">
         <Image src="/decoration/estrellas_blanco.png" alt="Estrellas" width={100} height={100} className="object-contain w-full h-auto" />

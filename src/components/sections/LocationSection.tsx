@@ -53,7 +53,19 @@ export function LocationSection() {
       { opacity: 0, x: 50 },
       { opacity: 1, x: 0, duration: 1.2, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: containerRef.current, start: 'top 80%' } }
     );
-    gsap.to('.rotating-text-1', { rotation: 360, duration: 25, repeat: -1, ease: 'none' });
+    // Rotación infinita optimizada
+    gsap.to('.rotating-text-1', {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        toggleActions: 'play pause resume pause',
+      },
+      rotation: 360,
+      duration: 25,
+      repeat: -1,
+      ease: 'none'
+    });
 
     // Parallax on the flower to make it feel more dynamic
     gsap.to('.flower-parallax', {
@@ -83,6 +95,7 @@ export function LocationSection() {
           placeholder="blur"
           alt="Decoración Ubicación" 
           fill
+          sizes="100vw"
           className="object-cover object-center" 
         />
       </div>

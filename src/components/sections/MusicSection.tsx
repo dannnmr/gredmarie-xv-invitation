@@ -80,6 +80,7 @@ export function MusicSection() {
           src="/decoration/bola disco.png" 
           alt="Bola de disco" 
           fill 
+          sizes="100vw"
           className="object-contain grayscale mix-blend-screen" 
         />
       </div>

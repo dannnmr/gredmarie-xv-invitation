@@ -133,6 +133,7 @@ export function HeroSection({ isRevealed }: HeroSectionProps) {
           placeholder="blur"
           alt="Hero Background"
           fill
+          sizes="100vw"
           priority
           className="object-cover object-center"
         />

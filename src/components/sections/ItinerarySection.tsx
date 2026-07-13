@@ -100,10 +100,10 @@ export function ItinerarySection() {
 
       {/* Sparkles Decorativos */}
       <FairyDust count={20} />
-      <Sparkle className="top-[5%] left-[5%] w-12 md:w-16 opacity-60" delay={0.5} speed={15} />
+      {/* <Sparkle className="top-[5%] left-[5%] w-12 md:w-16 opacity-60" delay={0.5} speed={15} />
       <Sparkle className="top-[40%] right-[2%] md:right-[5%] w-8 md:w-12 opacity-40" delay={1.5} speed={25} reverse />
       <Sparkle className="bottom-[15%] left-[10%] w-16 md:w-20 opacity-30" delay={0.2} speed={20} />
-      <Sparkle className="bottom-[5%] right-[15%] w-10 md:w-14 opacity-50" delay={2} speed={18} reverse />
+      <Sparkle className="bottom-[5%] right-[15%] w-10 md:w-14 opacity-50" delay={2} speed={18} reverse /> */}
 
       <div className="relative z-10 text-center mb-16 md:mb-24 flex items-start justify-center w-full">
         {/* Encabezado Outline (Estilo Evento) */}
@@ -144,7 +144,7 @@ export function ItinerarySection() {
                         <p className="font-sans text-sm text-theme-secondary/70 text-right">{item.description}</p>
                       </div>
                       <div className="itinerary-image relative w-20 h-20 shrink-0">
-                        {(item as any).image && <Image src={(item as any).image} alt={item.title} fill className="object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />}
+                        {(item as any).image && <Image src={(item as any).image} alt={item.title} fill sizes="(max-width: 768px) 100px, 150px" className="object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />}
                       </div>
                     </>
                   )}
@@ -157,7 +157,7 @@ export function ItinerarySection() {
                 <div className={`itinerary-content flex w-full md:w-1/2 pl-[4.5rem] md:pl-12 items-center justify-start ${isDesktopLeft ? 'md:opacity-0 md:invisible' : ''}`}>
                   <div className="flex w-full items-center justify-start gap-3 md:gap-6">
                     <div className="itinerary-image relative w-12 h-12 md:w-20 md:h-20 shrink-0">
-                      {(item as any).image && <Image src={(item as any).image} alt={item.title} fill className="object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />}
+                      {(item as any).image && <Image src={(item as any).image} alt={item.title} fill sizes="(max-width: 768px) 100px, 150px" className="object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />}
                     </div>
                     <div className="flex-1 flex flex-col items-start">
                       <div className="w-full flex items-center justify-start gap-2 mb-1">
