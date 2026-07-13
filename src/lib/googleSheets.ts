@@ -25,7 +25,6 @@ export async function submitToGoogleSheets(
     const params = new URLSearchParams(payload).toString();
     const urlWithParams = `${webhookUrl}?${params}`;
     
-    console.log("🚀 Enviando a Google Sheets:", urlWithParams);
 
     await fetch(urlWithParams, {
       method: 'GET',
@@ -33,10 +32,9 @@ export async function submitToGoogleSheets(
       cache: 'no-store',
     });
 
-    console.log("✅ Petición a Google Sheets enviada");
     return { success: true };
   } catch (error) {
-    console.error(`Error submitting ${type} to Google Sheets:`, error);
+    console.error(`Error submitting to Google Sheets:`, error);
     return { success: false, error };
   }
 }
