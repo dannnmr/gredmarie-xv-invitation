@@ -6,6 +6,11 @@ import gsap from 'gsap';
 import Image from 'next/image';
 import { invitationConfig } from '@/config/invitation.config';
 
+import baseImg from '../../../public/invitation/sobre_completo_gredmarie.png';
+import leftFlapImg from '../../../public/invitation/sobre_lado_izquierdo_gredmarie.webp';
+import rightFlapImg from '../../../public/invitation/sobre_lado_derecho_gredmarie.webp';
+import sealImg from '../../../public/invitation/broche_gredmarie.png';
+
 interface EnvelopeProps {
   isOpen: boolean;
   onOpen: () => void;
@@ -124,7 +129,8 @@ export function EnvelopeScreen({ isOpen, onOpen, onStartOpen }: EnvelopeProps) {
         className="absolute inset-0 w-full h-full min-h-[100vh] z-20 pointer-events-none"
       >
         <Image 
-          src={invitationConfig.assets.envelope.base} 
+          src={baseImg} 
+          placeholder="blur"
           alt="Sobre" 
           fill 
           priority
@@ -139,7 +145,8 @@ export function EnvelopeScreen({ isOpen, onOpen, onStartOpen }: EnvelopeProps) {
         className="absolute inset-0 w-full h-full min-h-[100vh] z-10 pointer-events-none"
       >
         <Image 
-          src={invitationConfig.assets.envelope.leftFlap} 
+          src={leftFlapImg} 
+          placeholder="blur"
           alt="Solapa Izquierda" 
           fill 
           priority
@@ -154,7 +161,8 @@ export function EnvelopeScreen({ isOpen, onOpen, onStartOpen }: EnvelopeProps) {
         className="absolute inset-0 w-full h-full min-h-[100vh] z-10 pointer-events-none"
       >
         <Image 
-          src={invitationConfig.assets.envelope.rightFlap} 
+          src={rightFlapImg} 
+          placeholder="blur"
           alt="Solapa Derecha" 
           fill 
           priority
@@ -170,7 +178,8 @@ export function EnvelopeScreen({ isOpen, onOpen, onStartOpen }: EnvelopeProps) {
         className="absolute z-30 w-[300px] h-[300px] flex items-center justify-center cursor-pointer border-none bg-transparent drop-shadow-[0_10px_15px_rgba(0,0,0,0.2)]"
       >
         <Image 
-          src={invitationConfig.assets.envelope.seal} 
+          src={sealImg} 
+          placeholder="blur"
           alt="Abrir Invitación" 
           fill 
           priority
