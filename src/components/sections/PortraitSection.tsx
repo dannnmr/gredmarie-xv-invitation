@@ -146,19 +146,19 @@
         {/* Estrellas decorativas SVG */}
         <div className="absolute inset-0 z-20 pointer-events-none">
           {/* Arriba izquierda */}
-          <EightPointStarSVG className="animated-star animated-star-float absolute top-[2%] left-[-15%] w-10 h-10 drop-shadow-[0_0_8px_white]" />
+          <EightPointStarSVG className="animated-star animated-star-float absolute top-[2%] left-[-15%] w-7 h-7 drop-shadow-[0_0_8px_white]" />
           
           {/* Medio y abajo izquierda */}
-          <HollowStarSVG className="animated-star animated-star-float absolute bottom-[10%] left-[-10%] w-11 h-11 drop-shadow-[0_0_6px_white]" />
+          <HollowStarSVG className="animated-star animated-star-float absolute bottom-[10%] left-[-10%] w-8 h-8 drop-shadow-[0_0_6px_white]" />
           <EightPointStarSVG className="animated-star animated-star-float absolute bottom-[-5%] left-[15%] w-7 h-7 drop-shadow-[0_0_8px_white]" />
 
           {/* Arriba derecha */}
-          <EightPointStarSVG className="animated-star animated-star-float absolute top-[-5%] right-[10%] w-10 h-10 drop-shadow-[0_0_8px_white]" />
-          <HollowStarSVG className="animated-star animated-star-float absolute top-[20%] right-[-15%] w-12 h-12 drop-shadow-[0_0_6px_white]" />
+          <EightPointStarSVG className="animated-star animated-star-float absolute top-[-5%] right-[10%] w-8 h-8 drop-shadow-[0_0_8px_white]" />
+          <HollowStarSVG className="animated-star animated-star-float absolute top-[20%] right-[-15%] w-7 h-7 drop-shadow-[0_0_6px_white]" />
 
           {/* Medio y abajo derecha */}
-          <EightPointStarSVG className="animated-star animated-star-float absolute top-[55%] right-[-20%] w-10 h-10 drop-shadow-[0_0_10px_white]" />
-          <EightPointStarSVG className="animated-star animated-star-float absolute bottom-[-15%] right-[-15%] w-12 h-12 drop-shadow-[0_0_10px_white]" />
+          <EightPointStarSVG className="animated-star animated-star-float absolute top-[55%] right-[-20%] w-6 h-6 drop-shadow-[0_0_10px_white]" />
+          <EightPointStarSVG className="animated-star animated-star-float absolute bottom-[-15%] right-[-15%] w-7 h-7 drop-shadow-[0_0_10px_white]" />
         </div>
 
         {/* Marco Arch con Doble Borde plateado luminoso */}
