@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import Image from 'next/image';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useCountdown } from '@/hooks/useCountdown';
 import { invitationConfig } from '@/config/invitation.config';
@@ -35,6 +36,11 @@ export function CountdownSection() {
       stagger: 0.15,
       ease: 'back.out(1.2)'
     });
+
+    // Animación flotante para las decoraciones
+    gsap.to('.floating-deco-1', { y: -15, rotation: 8, duration: 4.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    gsap.to('.floating-deco-2', { y: 15, rotation: -8, duration: 5.5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+
   }, { scope: containerRef });
 
   const items = [
@@ -47,10 +53,18 @@ export function CountdownSection() {
   return (
     <section 
       ref={containerRef}
-      className="py-24 px-6 relative w-full flex flex-col items-center justify-center bg-black overflow-hidden"
+      className="py-24 px-6 relative w-full flex flex-col items-center justify-center bg-theme-primary overflow-hidden"
     >
       {/* Luz de fondo sutil */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse,_rgba(30,58,138,0.15)_0%,_transparent_60%)] blur-[40px] pointer-events-none z-0"></div>
+
+      {/* Elementos Decorativos */}
+      <div className="absolute top-[10%] right-[10%] opacity-40 w-24 md:w-32 pointer-events-none z-0 floating-deco-1">
+        <Image src="/decoration/estrellas_blanco.png" alt="Estrellas" width={120} height={120} className="object-contain w-full h-auto" />
+      </div>
+      <div className="absolute bottom-[5%] left-[5%] opacity-20 w-32 md:w-48 pointer-events-none z-0 floating-deco-2">
+        <Image src="/decoration/flor_blanca.png" alt="Flor Blanca" width={200} height={200} className="object-contain grayscale w-full h-auto" />
+      </div>
 
       {/* Títulos */}
       <div className="relative z-10 text-center mb-16">

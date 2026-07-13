@@ -5,6 +5,7 @@ import { useEnvelopeSession } from '@/hooks/useEnvelopeSession';
 import { EnvelopeScreen } from '@/components/core/EnvelopeScreen';
 import { AudioPlayer } from '@/components/core/AudioPlayer';
 import { HeroSection } from '@/components/sections/HeroSection';
+import { PortraitSection } from '@/components/sections/PortraitSection';
 import { ParentsSection } from '@/components/sections/ParentsSection';
 import { SaveTheDateSection } from '@/components/sections/SaveTheDateSection';
 import { CountdownSection } from '@/components/sections/CountdownSection';
@@ -36,6 +37,7 @@ export default function Home() {
       {/* Contenido principal oculto (y bloqueado el scroll) hasta abrir el sobre */}
       <main className={`relative w-full ${isOpen ? 'h-auto overflow-visible' : 'h-screen overflow-hidden'}`}>
         <HeroSection isRevealed={isRevealed} />
+        <PortraitSection />
         <ParentsSection />
         {/* Recepción */}
         <SaveTheDateSection />

@@ -7,7 +7,8 @@ export const invitationConfig = {
   event: {
     date: new Date('2026-07-24T19:00:00'), // Fecha 24 de Julio 2026
     receptionTime: '19:30',
-    locationName: 'Ubicación del Evento',
+    locationName: 'Ciudad Jardín (Salón De Eventos)',
+    locationAddress: 'Av. Moscú 7245, Santa Cruz de la Sierra',
     locationUrl: 'https://maps.app.goo.gl/XNWiXKXeVsG69yDH9?g_st=ic'
   },
   parents: {
@@ -26,7 +27,7 @@ export const invitationConfig = {
     { time: '22:30', title: '¡Todos a la pista!', description: 'A bailar.', icon: 'music' },
     { time: '23:30', title: 'Hora Loca', description: 'Fiesta temática.', icon: 'sparkles' },
     { time: '00:00', title: 'Torta', description: 'Momento dulce.', icon: 'cake' },
-    { time: '03:00', title: 'Hasta pronto 💋', description: 'Gracias por acompañarnos.', icon: 'heart' },
+    { time: '03:00', title: 'Hasta pronto', description: 'Gracias por acompañarnos.', icon: 'heart' },
   ],
   dressCode: {
     description: 'Código de Vestimenta Formal',
@@ -61,7 +62,7 @@ export const invitationConfig = {
     },
   },
   assets: {
-    heroBackground: "https://res.cloudinary.com/dvaswskle/image/upload/v1783049539/bg_original_kp1hum.webp", // Imagen de fondo real de Vania-Tania para probar
+    heroBackground: "/hero/copa_azul_fondo.png", // Imagen de fondo real de Vania-Tania para probar
     decorations: {
       stars: "/images/decorations/stars.png", // Placeholder
     },
@@ -70,6 +71,9 @@ export const invitationConfig = {
       leftFlap: "/invitation/sobre_lado_izquierdo_gredmarie.webp",
       rightFlap: "/invitation/sobre_lado_derecho_gredmarie.webp",
       seal: "/invitation/broche_gredmarie.png",
+    },
+    info:{
+      qr: "/qr/fffa26f8-4f04-4da5-8a35-94c2e793ee91.jpeg"
     }
   },
 };

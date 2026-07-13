@@ -63,6 +63,7 @@ export function EnvelopeScreen({ isOpen, onOpen, onStartOpen }: EnvelopeProps) {
     const tl = gsap.timeline({
       onComplete: () => {
         onOpen(); // Desmonta el sobre globalmente
+        setIsAnimating(false);
       }
     });
 

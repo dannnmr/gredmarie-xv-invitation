@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { invitationConfig } from '@/config/invitation.config';
@@ -37,6 +38,10 @@ export function RSVPSection() {
         ease: 'linear'
       });
     }
+
+    // Animación flotante de la bola de disco
+    gsap.to('.rsvp-disco', { y: -15, duration: 4, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+
   }, { scope: containerRef });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -62,6 +67,11 @@ export function RSVPSection() {
       className="py-16 px-6 relative w-full flex items-center justify-center bg-black overflow-hidden"
     >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse,_rgba(30,58,138,0.15)_0%,_transparent_70%)] blur-[50px] z-0 pointer-events-none" />
+
+      {/* Bolas de disco de fondo */}
+      <div className="absolute top-[-5%] md:top-[0%] left-1/2 -translate-x-1/2 w-[80%] md:w-[60%] max-w-[450px] z-0 pointer-events-none opacity-50 rsvp-disco mix-blend-screen">
+        <Image src="/hero/bolas_disco_azul.png" alt="Bolas de Disco" width={400} height={200} className="object-contain w-full h-auto" />
+      </div>
 
       <div 
         ref={formCardRef}

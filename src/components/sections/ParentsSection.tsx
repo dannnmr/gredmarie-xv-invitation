@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { invitationConfig } from '@/config/invitation.config';
+import Image from 'next/image';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -35,12 +36,17 @@ export function ParentsSection() {
   return (
     <section 
       ref={containerRef}
-      className="py-24 px-6 relative w-full flex flex-col items-center text-center bg-theme-primary text-theme-secondary"
+      className="py-24 px-6 relative w-full flex flex-col items-center text-center bg-theme-primary text-theme-secondary overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-theme-primary via-theme-accent/5 to-theme-primary pointer-events-none z-0"></div>
+      <div className="absolute inset-0 bg-theme-accent/5 pointer-events-none z-0"></div>
+      
+      {/* Elementos Decorativos de Estrellas para continuidad */}
+      <div className="absolute inset-0 w-full h-full opacity-20 pointer-events-none z-0 mix-blend-screen">
+        <Image src="/decoration/flor_blanca.png" alt="Línea de estrellas" fill className="object-cover md:object-contain object-bottom" />
+      </div>
 
       <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
-        <h3 className="parents-text font-serif text-lg md:text-xl text-theme-gold/80 italic mb-8">
+        <h3 className="parents-text font-serif text-lg md:text-xl text-theme-gold/80 italic mb-5">
           {parents.topLabel}
         </h3>
         
@@ -53,7 +59,7 @@ export function ParentsSection() {
             {parents.motherName}
           </p>
         </div>
-
+{/* 
         {parents.godparents && parents.godparents.length > 0 && (
           <div className="parents-text mb-16">
             <h4 className="font-sans text-xs tracking-[0.2em] uppercase text-theme-gold mb-6">Padrinos</h4>
@@ -66,9 +72,9 @@ export function ParentsSection() {
               ))}
             </div>
           </div>
-        )}
+        )} */}
 
-        <p className="parents-text font-sans text-sm md:text-base leading-relaxed tracking-wider text-theme-secondary/80 max-w-md mt-8">
+        <p className="parents-text font-serif text-sm md:text-base leading-relaxed tracking-wider text-theme-secondary/80 max-w-md mt-1">
           {parents.invitationText}
         </p>
       </div>

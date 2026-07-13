@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -69,12 +70,23 @@ export function SaveTheDateSection() {
     >
       <div className="absolute inset-0 bg-theme-accent/5 z-0"></div>
 
+      {/* Elementos Decorativos de Estrellas */}
+      <div className="absolute inset-0 w-full h-full opacity-40 pointer-events-none z-0 mix-blend-screen">
+        <Image src="/decoration/strellas_linea.png" alt="Línea de estrellas" fill className="object-cover md:object-contain object-bottom" />
+      </div>
+      <div className="absolute top-[25%] right-[5%] opacity-50 w-16 md:w-24 pointer-events-none z-0 animate-[pulse_5s_ease-in-out_infinite]">
+        <Image src="/decoration/estrellas_blanco.png" alt="Estrellas" width={100} height={100} className="object-contain w-full h-auto" />
+      </div>
+      <div className="absolute bottom-[10%] left-[8%] opacity-40 w-15 md:w-25 pointer-events-none z-0 animate-[pulse_4s_ease-in-out_infinite_reverse]">
+        <Image src="/decoration/estrellas_blanco.png" alt="Estrellas" width={100} height={100} className="object-contain w-full h-auto" />
+      </div>
+
       <div className="relative z-10 text-center flex flex-col items-center">
         <h2 className="std-element font-sans text-xs tracking-[0.4em] uppercase text-theme-gold mb-10">
           Save the Date
         </h2>
         
-        <div className="std-element flex items-center justify-center gap-6 md:gap-10 mb-8 border-y border-theme-gold/30 py-6 px-12 md:px-20 backdrop-blur-sm bg-theme-primary/40 rounded-3xl shadow-[0_0_20px_rgba(30,58,138,0.15)]">
+        <div className="std-element flex items-center justify-center gap-3 md:gap-10 mb-8 border-y border-theme-gold/30 py-6 px-10 md:px-20 backdrop-blur-sm bg-theme-primary/40 rounded-3xl shadow-[0_0_20px_rgba(30,58,138,0.15)]">
           <div className="flex flex-col items-center">
             <span className="font-serif text-xl md:text-2xl text-theme-secondary/80 uppercase">Viernes</span>
           </div>

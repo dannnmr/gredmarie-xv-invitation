@@ -1,9 +1,9 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { Gift } from 'lucide-react';
+import { Gift, Download, Maximize2, X } from 'lucide-react';
 import { invitationConfig } from '@/config/invitation.config';
 import Image from 'next/image';
 
@@ -24,14 +24,26 @@ export function GiftRegistrySection() {
     });
   }, { scope: containerRef });
 
-  const { giftRegistry } = invitationConfig;
+  const [isExpanded, setIsExpanded] = useState(false);
+  const { giftRegistry, assets } = invitationConfig;
+  const qrUrl = (assets.info as any)?.qr || giftRegistry.qrImage;
 
   return (
     <section 
       ref={containerRef}
-      className="py-24 px-6 relative w-full flex flex-col items-center text-center bg-theme-primary"
+      className="py-24 px-6 relative w-full flex flex-col items-center text-center bg-theme-primary overflow-hidden"
     >
-      <div className="gift-element w-16 h-16 rounded-full bg-theme-gold/10 flex items-center justify-center mb-8 border border-theme-gold/30">
+      <div className="absolute inset-0 bg-theme-accent/5 z-0"></div>
+
+      {/* Decoración de flores blancas de fondo */}
+      <div className="absolute bottom-[-5%] left-[-5%] opacity-20 w-32 md:w-48 pointer-events-none z-0 rotate-12">
+        <Image src="/decoration/flor_blanca.png" alt="Flor Blanca" width={200} height={200} className="object-contain" />
+      </div>
+      <div className="absolute top-[10%] right-[-5%] opacity-20 w-24 md:w-32 pointer-events-none z-0 -rotate-12">
+        <Image src="/decoration/flor_blanca.png" alt="Flor Blanca" width={150} height={150} className="object-contain" />
+      </div>
+
+      <div className="gift-element relative z-10 w-16 h-16 rounded-full bg-theme-gold/10 flex items-center justify-center mb-8 border border-theme-gold/30">
         <Gift className="w-8 h-8 text-theme-gold" />
       </div>
 
@@ -43,20 +55,66 @@ export function GiftRegistrySection() {
         {giftRegistry.message}
       </p>
 
-      {giftRegistry.qrImage && (
-        <div className="gift-element relative w-48 h-48 md:w-56 md:h-56 p-4 bg-white rounded-2xl shadow-[0_0_30px_rgba(30,58,138,0.3)]">
-          {/* El div blanco hace de fondo para el QR */}
-          <div className="w-full h-full border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center text-gray-400 font-sans text-xs text-center px-4">
-            [ Imagen del Código QR ]<br/>Reemplazar en /public/images
+      {qrUrl && (
+        <div className="relative z-50 pointer-events-auto">
+          <div className="gift-element flex flex-col items-center group">
+            <button 
+              onClick={() => setIsExpanded(true)}
+              className="relative w-48 h-48 md:w-56 md:h-56 p-2 bg-white rounded-2xl shadow-[0_0_30px_rgba(30,58,138,0.3)] cursor-pointer overflow-hidden transition-transform duration-300 hover:scale-105 border-4 border-theme-gold/20 block"
+            >
+              <Image 
+                src={qrUrl} 
+                alt="Código QR para regalo" 
+                fill 
+                sizes="(max-width: 768px) 192px, 224px"
+                className="object-cover rounded-xl pointer-events-none"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-2xl pointer-events-none">
+                <Maximize2 className="text-white w-8 h-8" />
+              </div>
+            </button>
+            
+            <a
+              href={qrUrl}
+              download="qr_regalo.jpeg"
+              className="mt-6 relative z-50 flex items-center justify-center gap-2 text-theme-gold hover:text-white transition-colors duration-300 font-sans text-xs tracking-widest uppercase cursor-pointer"
+            >
+              <Download className="w-4 h-4 pointer-events-none" />
+              Descargar QR
+            </a>
           </div>
-          {/* Cuando tengas la imagen real, descomenta esto:
-          <Image 
-            src={giftRegistry.qrImage} 
-            alt="Código QR para regalo" 
-            fill 
-            className="object-contain p-4"
-          /> 
-          */}
+
+          {/* Modal del QR */}
+          {isExpanded && (
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm transition-opacity">
+              <button 
+                onClick={() => setIsExpanded(false)}
+                className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-4"
+              >
+                <X className="w-8 h-8 pointer-events-none" />
+              </button>
+              
+              <div className="relative z-50 w-full max-w-sm aspect-square bg-white p-6 rounded-3xl shadow-2xl flex flex-col justify-center items-center pointer-events-auto">
+                <div className="relative w-full h-full flex-1 pointer-events-none">
+                  <Image 
+                    src={qrUrl} 
+                    alt="Código QR Expandido" 
+                    fill 
+                    sizes="(max-width: 768px) 90vw, 400px"
+                    className="object-contain rounded-xl"
+                  />
+                </div>
+                <a
+                  href={qrUrl}
+                  download="qr_regalo.jpeg"
+                  className="mt-6 py-4 px-6 bg-theme-primary text-theme-gold flex items-center justify-center gap-2 rounded-xl font-sans text-xs tracking-widest uppercase font-bold hover:bg-black transition-colors w-full border border-theme-gold/30 cursor-pointer"
+                >
+                  <Download className="w-4 h-4 pointer-events-none" />
+                  Descargar Imagen
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </section>

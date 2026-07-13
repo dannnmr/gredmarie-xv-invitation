@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -73,6 +74,17 @@ export function MusicSection() {
       className="py-24 px-6 relative w-full flex flex-col items-center justify-center bg-black overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-t from-theme-primary to-transparent z-0"></div>
+
+      {/* Imagen Decorativa de Fondo */}
+      <div className="absolute top-[10%] left-[-40%] md:right-[5%] opacity-20 w-100 md:w-150 pointer-events-none z-0">
+        <Image 
+          src="/decoration/bola disco.png" 
+          alt="Bola de disco" 
+          width={350} 
+          height={350} 
+          className="object-contain grayscale mix-blend-screen w-full h-auto" 
+        />
+      </div>
 
       <div className="relative z-10 w-full max-w-[600px] flex flex-col items-center text-center">
         

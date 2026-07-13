@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import Image from 'next/image';
 import { Sparkles, Martini, Heart, Camera, Utensils, Music, Cake } from 'lucide-react';
 import { invitationConfig } from '@/config/invitation.config';
 
@@ -63,21 +64,31 @@ export function ItinerarySection() {
   return (
     <section 
       ref={containerRef}
-      className="py-24 px-6 relative w-full bg-theme-primary"
+      className="py-16 px-6 relative w-full bg-theme-primary"
     >
-      <div className="text-center mb-20">
+      {/* Fondo de flores azules muy sutil */}
+      <div className="absolute inset-0 z-0 opacity-10 pointer-events-none mix-blend-screen">
+        <Image
+          src="/decoration/flores_azules_fondo.png"
+          alt="Fondo flores azules"
+          fill
+          className="object-cover"
+        />
+      </div>
+
+      <div className="relative z-10 text-center mb-12">
         <h2 className="font-display text-5xl md:text-6xl text-theme-gold drop-shadow-[0_0_15px_rgba(192,192,192,0.3)]">
           Itinerario
         </h2>
       </div>
 
-      <div className="relative max-w-3xl mx-auto">
+      <div className="relative z-10 max-w-3xl mx-auto">
         {/* Línea central guía */}
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-theme-secondary/10 -translate-x-1/2"></div>
         {/* Línea animada (progreso) */}
         <div ref={lineRef} className="absolute left-1/2 top-0 w-[2px] bg-theme-gold -translate-x-1/2 shadow-[0_0_8px_#C0C0C0]"></div>
 
-        <div className="flex flex-col gap-12 md:gap-20">
+        <div className="flex flex-col gap-8 md:gap-12">
           {itinerary.map((item, idx) => {
             const isLeft = idx % 2 === 0;
             const Icon = (IconMap as any)[item.icon || 'sparkles'] || Sparkles;
@@ -117,6 +128,9 @@ export function ItinerarySection() {
           })}
         </div>
       </div>
+
+      {/* Difuminado hacia la siguiente sección (Location) */}
+      <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none"></div>
     </section>
   );
 }

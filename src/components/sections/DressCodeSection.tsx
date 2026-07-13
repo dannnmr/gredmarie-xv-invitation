@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Ban } from 'lucide-react';
@@ -60,14 +61,18 @@ export function DressCodeSection() {
           Dress Code
         </h2>
 
-        {/* Elemento flotante (Reemplazar con <Image /> cuando tengas el PNG real) */}
+        {/* Elemento flotante con la imagen real */}
         <div 
           ref={floatRef}
-          className="relative w-full max-w-[180px] h-[150px] mt-4 mb-6 z-[1] drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] flex items-center justify-center border-2 border-dashed border-white/20 rounded-2xl bg-black/20"
+          className="relative w-full max-w-[180px] h-[180px] mt-2 mb-6 z-[1] drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] flex items-center justify-center pointer-events-none"
         >
-           <span className="font-sans text-xs text-white/50 px-4">
-             [Imagen de Vestido/Traje]<br/> Reemplazar en código
-           </span>
+           <Image 
+             src="/decoration/codedress.png" 
+             alt="Dress Code" 
+             fill 
+             sizes="(max-width: 768px) 180px, 180px"
+             className="object-contain" 
+           />
         </div>
         
         {/* Círculos de texturas de colores */}
