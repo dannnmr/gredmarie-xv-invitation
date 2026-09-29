@@ -49,9 +49,12 @@ export function FooterSection() {
 
         {/* Lado derecho - Contact Card de Daniela Miranda (Diseñadora) */}
         <a
-          href="https://wa.me/59168183484?text=Hola%20Daniela!%20Me%20gustaría%20saber%20más%20sobre%20tus%20diseños%20de%20invitaciones%20digitales."
+          // Pasa por /contacto: registra de qué invitación vino el toque y
+          // redirige a WhatsApp con el mensaje de siempre (src/app/contacto).
+          // <a> plano, NO <Link>: el prefetch de Next contaría toques falsos.
+          href="/contacto"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="nofollow noopener noreferrer"
           className="group relative flex items-center justify-between gap-6 py-3 px-7 bg-white/5 backdrop-blur-xl border border-white/20 rounded-[24px] max-w-[380px] w-full transition-all duration-500 hover:border-white/50 hover:-translate-y-1 hover:bg-white/10 shadow-[0_0_25px_rgba(0,0,0,0.6)] overflow-hidden"
         >
           {/* Pequeños destellos azules en la tarjeta
